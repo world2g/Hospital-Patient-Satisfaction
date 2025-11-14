@@ -1,0 +1,151 @@
+table patients
+	lineageTag: 6467b9fb-47e8-424d-a780-389478205aeb
+
+	measure Unsatisfied_Patients =
+			
+			DIVIDE(
+			
+			    CALCULATE(
+			        COUNT(patients[satisfaction]),
+			        patients[satisfaction] < 70
+			        ),
+			    COUNT(patients[satisfaction])
+			)
+		lineageTag: 0623dd5f-2a51-4cd1-92ad-12c9c6ffad95
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column patient_id
+		dataType: string
+		lineageTag: ebabb7ad-9670-4a09-bd9e-8a15a6e83ce1
+		summarizeBy: none
+		sourceColumn: patient_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 8d03a16b-ccce-42bb-aa2a-5bded107ea77
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column age
+		dataType: int64
+		formatString: 0
+		lineageTag: 41e4542f-eeb6-4af1-871a-aaabdccb67a7
+		summarizeBy: sum
+		sourceColumn: age
+
+		annotation SummarizationSetBy = Automatic
+
+	column arrival_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 904e81df-b36d-4169-81e5-e3f5c543b8c0
+		summarizeBy: none
+		sourceColumn: arrival_date
+
+		variation Variation
+			isDefault
+			relationship: 3adfba5b-79d5-4e9e-b590-a14959a1158e
+			defaultHierarchy: LocalDateTable_cfcc30f7-1c7e-4e32-827c-39beb1262b24.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column departure_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6b9985b5-d9bf-4bcd-bec4-d056f9afa573
+		summarizeBy: none
+		sourceColumn: departure_date
+
+		variation Variation
+			isDefault
+			relationship: 86b0cb9a-911f-4fa8-9ff7-0d240045aa81
+			defaultHierarchy: LocalDateTable_2b3e3d32-4b30-4255-905c-62b9f4a8ecab.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column service
+		dataType: string
+		lineageTag: 95f78cdb-3454-4b47-ab31-876768761242
+		summarizeBy: none
+		sourceColumn: service
+
+		annotation SummarizationSetBy = Automatic
+
+	column satisfaction
+		dataType: int64
+		formatString: 0
+		lineageTag: cea07a16-d7de-4e6d-b8c8-93720050fa78
+		summarizeBy: count
+		sourceColumn: satisfaction
+
+		annotation SummarizationSetBy = User
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"patients","TableItemName":"satisfaction (bins)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column Length_of_stay =
+			
+			DATEDIFF('patients'[arrival_date], 'patients'[departure_date], DAY)
+		formatString: 0
+		lineageTag: 2b580905-c5ff-4698-a139-24fcd239ac00
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'satisfaction (bins)' =
+			IF(
+				ISBLANK('patients'[satisfaction]),
+				BLANK(),
+				INT('patients'[satisfaction] / 4) * 4
+			)
+		formatString: 0
+		lineageTag: 4be309d0-0426-4a11-b934-a85498414ea0
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "patients"
+				          }
+				        },
+				        "Property": "satisfaction"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 4.0,
+				      "unit": 0
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"p","Entity":"patients"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"satisfaction"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"satisfaction"}},"Size":4.0}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+	partition patients = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\marti\OneDrive\Documents\Data Analytics\5-day-data-challenge\Resources\Datasets\patients.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"patient_id", type text}, {"name", type text}, {"age", Int64.Type}, {"arrival_date", type date}, {"departure_date", type date}, {"service", type text}, {"satisfaction", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

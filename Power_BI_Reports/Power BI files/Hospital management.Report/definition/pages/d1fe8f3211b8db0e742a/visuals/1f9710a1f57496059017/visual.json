@@ -1,0 +1,67 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "1f9710a1f57496059017",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 131.11111111111111,
+    "width": 235.55555555555554
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "patients"
+                        }
+                      },
+                      "Property": "satisfaction"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Avg(patients.satisfaction)",
+              "nativeQueryRef": "Average Patient Satisfaction",
+              "displayName": "Average Patient Satisfaction",
+              "format": "0.0"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "patients"
+                      }
+                    },
+                    "Property": "satisfaction"
+                  }
+                },
+                "Function": 1
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

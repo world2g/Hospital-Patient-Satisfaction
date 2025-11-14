@@ -1,0 +1,25 @@
+table new_staff
+	lineageTag: 4b7f97ee-cb93-47f3-bfad-a38b2a4f4ffa
+
+	column Column
+		formatString: 0
+		lineageTag: 886cc125-1e40-4699-a46d-a320ac4bd795
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition new_staff = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = e23ce03727eb4bc7bc4bd25f54dc0530
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":"\nNATURALINNERJOIN(staff,staff_schedule)"}
+
+	annotation 277cc1b9-af89-4597-8e15-cacc25c0886b = ```
+			The Column with the name of 'staff_id' already exists in the 'new_staff' Table.
+			
+			```
+

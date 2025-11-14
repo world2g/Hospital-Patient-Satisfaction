@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-KE
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["patients","services_weekly","staff","staff_schedule"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table patients
+ref table DateTableTemplate_b5551801-90fc-41d8-8660-c89d98042d4e
+ref table LocalDateTable_cfcc30f7-1c7e-4e32-827c-39beb1262b24
+ref table LocalDateTable_2b3e3d32-4b30-4255-905c-62b9f4a8ecab
+ref table services_weekly
+ref table staff
+ref table staff_schedule
+ref table new_staff
+
+ref cultureInfo en-US
+

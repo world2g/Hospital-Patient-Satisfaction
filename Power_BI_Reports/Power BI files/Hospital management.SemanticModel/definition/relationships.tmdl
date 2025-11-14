@@ -1,0 +1,14 @@
+relationship 3adfba5b-79d5-4e9e-b590-a14959a1158e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: patients.arrival_date
+	toColumn: LocalDateTable_cfcc30f7-1c7e-4e32-827c-39beb1262b24.Date
+
+relationship 86b0cb9a-911f-4fa8-9ff7-0d240045aa81
+	joinOnDateBehavior: datePartOnly
+	fromColumn: patients.departure_date
+	toColumn: LocalDateTable_2b3e3d32-4b30-4255-905c-62b9f4a8ecab.Date
+
+relationship 49e44c10-0cf6-1b25-4d9a-0a5a94d25f7c
+	fromColumn: staff_schedule.staff_id
+	toColumn: staff.staff_id
+

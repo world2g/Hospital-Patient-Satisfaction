@@ -1,0 +1,65 @@
+table staff_schedule
+	lineageTag: 9d922286-a69b-4d43-9655-0862a309ff1f
+
+	column week
+		dataType: int64
+		formatString: 0
+		lineageTag: e04f094d-c9ef-4e20-a82a-5d05ea626228
+		summarizeBy: sum
+		sourceColumn: week
+
+		annotation SummarizationSetBy = Automatic
+
+	column staff_id
+		dataType: string
+		lineageTag: 58fafd09-58bf-4527-b4e8-141d0905bf2e
+		summarizeBy: none
+		sourceColumn: staff_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column staff_name
+		dataType: string
+		lineageTag: 92c58f8b-4fc3-45b9-a161-68df16c0835a
+		summarizeBy: none
+		sourceColumn: staff_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column role
+		dataType: string
+		lineageTag: 2ddb2434-37f3-4ef7-b102-1a4b5abc6e3c
+		summarizeBy: none
+		sourceColumn: role
+
+		annotation SummarizationSetBy = Automatic
+
+	column service
+		dataType: string
+		lineageTag: 83062897-b28f-4286-8b4b-9e5bea7791fa
+		summarizeBy: none
+		sourceColumn: service
+
+		annotation SummarizationSetBy = Automatic
+
+	column present
+		dataType: int64
+		formatString: 0
+		lineageTag: ac1f86dd-f552-4ac5-bf7c-bc4a5cadcef3
+		summarizeBy: sum
+		sourceColumn: present
+
+		annotation SummarizationSetBy = Automatic
+
+	partition staff_schedule = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\marti\OneDrive\Documents\Data Analytics\5-day-data-challenge\Resources\Datasets\staff_schedule.csv"),[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"week", Int64.Type}, {"staff_id", type text}, {"staff_name", type text}, {"role", type text}, {"service", type text}, {"present", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,50 @@
+table staff
+	lineageTag: bab961d1-290c-4fb1-9704-f54e74cfa3d9
+
+	column staff_id
+		dataType: string
+		lineageTag: 451a9310-d0e8-4234-a1fb-b3162e1976bb
+		summarizeBy: none
+		sourceColumn: staff_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column staff_name
+		dataType: string
+		lineageTag: 2630a8b6-98ec-4e9d-9159-d53bdc98d01a
+		summarizeBy: none
+		sourceColumn: staff_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column role
+		dataType: string
+		lineageTag: 94eb9460-e2df-4c09-9423-aec9e1eafd30
+		summarizeBy: none
+		sourceColumn: role
+
+		annotation SummarizationSetBy = Automatic
+
+	column service
+		dataType: string
+		lineageTag: 61afacbf-edc4-4aad-ad05-693bfcc1e956
+		summarizeBy: none
+		sourceColumn: service
+
+		annotation SummarizationSetBy = Automatic
+
+	partition staff = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\marti\OneDrive\Documents\Data Analytics\5-day-data-challenge\Resources\Datasets\staff.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"staff_id", type text}, {"staff_name", type text}, {"role", type text}, {"service", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

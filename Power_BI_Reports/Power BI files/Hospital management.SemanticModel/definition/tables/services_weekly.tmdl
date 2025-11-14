@@ -1,0 +1,115 @@
+table services_weekly
+	lineageTag: 1b3a9ecb-087b-421e-afc0-09bb112f138d
+
+	measure refused_patients = ```
+			
+			CALCULATE(
+			    SUM(services_weekly[patients_refused]) / SUM(services_weekly[patients_request])
+			) 
+			```
+		lineageTag: 3b81f24b-b50f-4281-bca6-d92dc1c980c3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column week
+		dataType: int64
+		formatString: 0
+		lineageTag: baa1f0fe-9e85-482d-93fe-f94034f9be1a
+		summarizeBy: sum
+		sourceColumn: week
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: a9b4a822-8fd6-48f3-913c-e436912998f4
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column service
+		dataType: string
+		lineageTag: 91d15c4c-964e-4ba5-9553-fad0f1c45e8d
+		summarizeBy: none
+		sourceColumn: service
+
+		annotation SummarizationSetBy = Automatic
+
+	column available_beds
+		dataType: int64
+		formatString: 0
+		lineageTag: f30391d7-4304-4f91-94e9-7e4c50cfa79c
+		summarizeBy: sum
+		sourceColumn: available_beds
+
+		annotation SummarizationSetBy = Automatic
+
+	column patients_request
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c61f161-f660-4153-83f5-a5759f6bcd0d
+		summarizeBy: sum
+		sourceColumn: patients_request
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column patients_admitted
+		dataType: int64
+		formatString: 0
+		lineageTag: 290888df-1597-489b-aaa9-589ba388c442
+		summarizeBy: sum
+		sourceColumn: patients_admitted
+
+		annotation SummarizationSetBy = Automatic
+
+	column patients_refused
+		dataType: int64
+		formatString: 0
+		lineageTag: 485c2801-47b6-4e80-abc0-e0738b1e56f1
+		summarizeBy: sum
+		sourceColumn: patients_refused
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_satisfaction
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b9668f2-76c7-4272-969f-0e91f3e78191
+		summarizeBy: sum
+		sourceColumn: patient_satisfaction
+
+		annotation SummarizationSetBy = Automatic
+
+	column staff_morale
+		dataType: int64
+		formatString: 0
+		lineageTag: 199df656-9ad1-4a4d-9684-7ce70acc4e1f
+		summarizeBy: sum
+		sourceColumn: staff_morale
+
+		annotation SummarizationSetBy = Automatic
+
+	column event
+		dataType: string
+		lineageTag: 013657ba-0f59-460e-85f2-09758b590cde
+		summarizeBy: none
+		sourceColumn: event
+
+		annotation SummarizationSetBy = Automatic
+
+	partition services_weekly = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\marti\OneDrive\Documents\Data Analytics\5-day-data-challenge\Resources\Datasets\services_weekly.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"week", Int64.Type}, {"month", Int64.Type}, {"service", type text}, {"available_beds", Int64.Type}, {"patients_request", Int64.Type}, {"patients_admitted", Int64.Type}, {"patients_refused", Int64.Type}, {"patient_satisfaction", Int64.Type}, {"staff_morale", Int64.Type}, {"event", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
