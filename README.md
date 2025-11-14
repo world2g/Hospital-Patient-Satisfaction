@@ -17,7 +17,7 @@ Kaggle — [Hospital Beds Management Database](https://www.kaggle.com/datasets/j
 
 ---
 
-## 🧠 Project Components
+##  Project Components
 
 ### 1. **Exploratory Data Analysis (EDA) — Jupyter Notebook**
 A full exploratory analysis of the datasets, including:
@@ -28,7 +28,7 @@ A full exploratory analysis of the datasets, including:
 - Initial visualizations
 
 **Notebook:**  
-[Hospital Bed Management.ipynb](/Jupyter%20Notebook/Hospital-Bed-Management.ipynb)
+[Hospital Bed Management](/Jupyter%20Notebook/Hospital-Bed-Management.ipynb)
 
 ---
 
@@ -37,16 +37,17 @@ A full exploratory analysis of the datasets, including:
 The Power BI file contains interactive dashboards used to generate the insights documented in the summary reports.
 
 **Power BI File:**  
-[Hospital Management.pbix](/Power_BI_Reports/Power%20BI%20files/Hospital%20management.pbix)
+[Hospital Management](/Power_BI_Reports/Power%20BI%20files/Hospital%20management.pbix)
 
 ---
 
-## 📝 Insight Reports
+##  Insight Reports
 
 Detailed written reports explaining the analysis findings, visual interpretations, and key observations.
 
 1. **[Patient Summary Report](/Power_BI_Reports/Patients%20Summary.md)**  
 2. **[Services Summary Report](/Power_BI_Reports/Services%20Summary.md)**  
+3. **[Key Insights](/Power_BI_Reports/Key%20Insights.md)**
 
 ---
 
@@ -65,7 +66,7 @@ The insights aim to support **data-driven improvements** in hospital operations 
 
 ---
 
-## 🛠 Tools & Technologies
+##  Tools & Technologies
 
 - **Python / Jupyter Notebook** — Exploratory Data Analysis  
 - **Pandas, Matplotlib, Seaborn** — Statistical exploration & visualizations  
